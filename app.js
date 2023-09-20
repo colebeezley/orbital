@@ -1,15 +1,20 @@
-const dotenv = require("dotenv");
 const express = require("express");
 const morgan = require("morgan");
 const axios = require("axios");
 
 const app = express();
 
+const authRouter = require(__dirname + "/src/routers/authRouter.js");
+
 app.use(morgan("tiny"));
 app.use(express.static(__dirname + "/public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.set("views", __dirname + "/src/views");
 app.set("view engine", "ejs");
+
+app.use("/auth", authRouter);
 
 app.get("/", async (req, res) => {
   const response1 = await axios("https://dog.ceo/api/breeds/image/random");
