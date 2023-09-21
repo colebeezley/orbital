@@ -5,25 +5,33 @@ const dotenv = require("dotenv").config();
 
 const authRouter = express.Router();
 
-const userSchema = new mongoose.Schema({
+const User = mongoose.model("User", {
   username: String,
   password: String,
 });
-const User = mongoose.model("User", userSchema);
 
 authRouter.route("/signup").post((req, res) => {
   const { username, password } = req.body;
   const user = { username, password };
 
   async function pushUser() {
-    await mongoose.connect(process.env.MONGO_KEY);
+    await mongoose.connect(process.env.MONGO_KEY, { dbName: "orbital" });
     console.log("connected to mongo");
 
-    User.collection.insertOne(user);
+    const currUser = await User.findOne({
+      username: username,
+      password: password,
+    });
+    if (currUser) {
+      console.log("user already exists");
+      res.redirect("/auth/login");
+    } else {
+      User.collection.insertOne(user);
+      res.end("user added");
+    }
   }
   pushUser();
 
-  res.end("user added");
   // TODO: passport
 });
 
@@ -34,22 +42,23 @@ authRouter
   })
   .post((req, res) => {
     const { username, password } = req.body;
+    let user;
 
-    // async function findUser() {
-    //   await mongoose.connect(process.env.MONGO_KEY);
-    //   console.log("connected to mongo");
+    async function findUser() {
+      await mongoose.connect(process.env.MONGO_KEY, { dbName: "orbital" });
+      console.log("connected to mongo");
 
-    //   const checkUser = await User.find({
-    //     username: req.body.username,
-    //     password: req.body.password,
-    //   });
-    //   if (checkUser) {
-    //     console.log("User found!");
-    //   } else {
-    //     console.log("Error: No user");
-    //   }
-    // }
-    // findUser();
+      const currUser = await User.findOne({
+        username: username,
+        password: password,
+      });
+      if (currUser) {
+        res.end("user exists");
+      } else {
+        res.end("no user");
+      }
+    }
+    findUser();
     // TODO: passport
   });
 
