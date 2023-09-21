@@ -2,13 +2,9 @@ const express = require("express");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
+const User = require("./../models/User.js");
 
 const authRouter = express.Router();
-
-const User = mongoose.model("User", {
-  username: String,
-  password: String,
-});
 
 authRouter.route("/signup").post((req, res) => {
   const { username, password } = req.body;
@@ -26,8 +22,17 @@ authRouter.route("/signup").post((req, res) => {
       console.log("user already exists");
       res.redirect("/auth/login");
     } else {
-      User.collection.insertOne(user);
-      res.end("user added");
+      results = await User.collection.insertOne(user);
+      req.login(
+        {
+          _id: results.insertedId.toString(),
+          username: username,
+          password: password,
+        },
+        () => {
+          res.redirect("/profile");
+        }
+      );
     }
   }
   pushUser();
@@ -40,26 +45,11 @@ authRouter
   .get((req, res) => {
     res.render("login");
   })
-  .post((req, res) => {
-    const { username, password } = req.body;
-    let user;
-
-    async function findUser() {
-      await mongoose.connect(process.env.MONGO_KEY, { dbName: "orbital" });
-      console.log("connected to mongo");
-
-      const currUser = await User.findOne({
-        username: username,
-        password: password,
-      });
-      if (currUser) {
-        res.end("user exists");
-      } else {
-        res.end("no user");
-      }
-    }
-    findUser();
-    // TODO: passport
-  });
+  .post(
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/auth/login",
+    })
+  );
 
 module.exports = authRouter;
