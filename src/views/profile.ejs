@@ -14,10 +14,15 @@
   <div class="container title">
     <h1>Orbital</h1>
     <hr />
-    <h1>You are logged in.</h1>
+    <h1>Hello, <%=username%></h1>
   </div>
 
-  <div class="container signin">
+  <div class="container title">
+    <p>Recently viewed:</p>
+    <div class="container gallery"><%=recent_images%></div>
+  </div>
+
+  <div class="container login">
     <a href="/"><h2>back</h2></a>
   </div>
 </body>

@@ -49,7 +49,7 @@ a:visited {
   margin-bottom: 2%;
 }
 
-.title h1 {
+.title h1, .title h2, .title p {
   font-size: 500%;
   margin: 50px auto;
 }
@@ -100,18 +100,13 @@ a:visited {
 /* LOGIN */
 
 .login p {
-  font-size: 40px;
-}
-
-/* SIGN IN */
-
-.signin h2 {
-  font-size: 500%;
-  margin: 50px auto;
-}
-
-.signin p {
   font-size: 250%;
   margin: 20px auto;
 }
+
+.login h2 {
+  font-size: 300%;
+  margin: 50px auto;
+}
+
 

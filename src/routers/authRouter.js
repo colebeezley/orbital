@@ -8,7 +8,7 @@ const authRouter = express.Router();
 
 authRouter.route("/signup").post((req, res) => {
   const { username, password } = req.body;
-  const user = { username, password };
+  const user = { username, password, recent: [] };
 
   async function pushUser() {
     await mongoose.connect(process.env.MONGO_KEY, { dbName: "orbital" });
@@ -36,8 +36,6 @@ authRouter.route("/signup").post((req, res) => {
     }
   }
   pushUser();
-
-  // TODO: passport
 });
 
 authRouter

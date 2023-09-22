@@ -8,7 +8,10 @@ const profileRouter = express.Router();
 
 profileRouter.route("/").get((req, res) => {
   if (req.user) {
-    res.render("profile");
+    res.render("profile", {
+      username: req.user.username,
+      recent_images: "test",
+    });
   } else {
     res.redirect("/auth/login");
   }
