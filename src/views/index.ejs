@@ -7,6 +7,10 @@
     href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Open+Sans:wght@300&family=Roboto+Condensed:wght@700&family=Work+Sans:wght@200&display=swap"
     rel="stylesheet"
   />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
 </head>
 
 <body>
@@ -18,18 +22,42 @@
 
   <!-- GALLERY -->
   <div class="container gallery">
-    <figure class="gallery__item gallery__item--1">
+    <figure class="img_container gallery__item gallery__item--1">
       <img src="<%=img1%>" class="gallery__img" alt="Image 1" />
+      <div class="overlay">
+        <a href="#" class="icon" title="favorite">
+          <i class="fa fa-thin fa-star"></i>
+        </a>
+      </div>
     </figure>
-    <figure class="gallery__item gallery__item--2">
+    <figure class="img_container gallery__item gallery__item--2">
       <img src="<%=img2%>" class="gallery__img" alt="Image 2" />
+      <div class="overlay">
+        <a href="#" class="icon" title="favorite">
+          <i class="fa fa-light fa-star"></i>
+        </a>
+      </div>
     </figure>
-    <figure class="gallery__item gallery__item--3">
+    <figure class="img_container gallery__item gallery__item--3">
       <img src="<%=img3%>" class="gallery__img" alt="Image 3" />
+      <div class="overlay">
+        <a href="#" class="icon" title="favorite">
+          <i class="fa fa-thin fa-star"></i>
+        </a>
+      </div>
     </figure>
-    <figure class="gallery__item gallery__item--4">
-      <img src="<%=img4%>" class="gallery__img" alt="Image4" />
+    <figure class="img_container gallery__item gallery__item--4">
+      <img src="<%=img4%>" class="gallery__img" alt="Image 4" />
+      <div class="overlay">
+        <a class="icon" title="favorite">
+          <i class="fa fa-thin fa-star"></i>
+        </a>
+      </div>
     </figure>
+  </div>
+
+  <div class="container login">
+    <p><a href="/profile">profile</a></p>
   </div>
 
   <div class="container login">
