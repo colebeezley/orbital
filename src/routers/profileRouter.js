@@ -7,7 +7,11 @@ const User = require("./../models/User.js");
 const profileRouter = express.Router();
 
 profileRouter.route("/").get((req, res) => {
-  res.render("profile");
+  if (req.user) {
+    res.render("profile");
+  } else {
+    res.redirect("/auth/login");
+  }
 });
 
 module.exports = profileRouter;
