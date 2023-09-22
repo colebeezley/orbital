@@ -19,7 +19,13 @@
 
   <div class="container title">
     <p>Recently viewed:</p>
-    <div class="container gallery"><%=recent_images%></div>
+    <div class="container gallery_recent">
+      <% recent_images.forEach((el, i) => {%>
+      <figure class="gallery__item gallery__item--<%=i%>">
+        <img src="<%=el%>" class="gallery__img" alt="Image <%=i%>" />
+      </figure>
+      <%})%>
+    </div>
   </div>
 
   <div class="container login">

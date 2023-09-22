@@ -33,9 +33,9 @@ app.use("/profile", profileRouter);
 
 app.get("/", async (req, res) => {
   const response1 = await axios("https://dog.ceo/api/breeds/image/random");
-  // const response2 = await axios("https://dog.ceo/api/breeds/image/random");
-  // const response3 = await axios("https://dog.ceo/api/breeds/image/random");
-  // const response4 = await axios("https://dog.ceo/api/breeds/image/random");
+  const response2 = await axios("https://dog.ceo/api/breeds/image/random");
+  const response3 = await axios("https://dog.ceo/api/breeds/image/random");
+  const response4 = await axios("https://dog.ceo/api/breeds/image/random");
 
   async function pushRecentImage() {
     await mongoose.connect(process.env.MONGO_KEY, { dbName: "orbital" });
@@ -48,8 +48,11 @@ app.get("/", async (req, res) => {
 
     // move most recent images to front of arr
     currUser.recent.unshift(response1.data.message);
+    currUser.recent.unshift(response2.data.message);
+    currUser.recent.unshift(response3.data.message);
+    currUser.recent.unshift(response4.data.message);
     if (currUser.recent.length > 12) {
-      currUser.recent.pop();
+      currUser.recent = currUser.recent.slice(11);
     }
     currUser.save();
   }
@@ -60,9 +63,9 @@ app.get("/", async (req, res) => {
 
   res.render("index", {
     img1: response1.data.message,
-    img2: response1.data.message,
-    img3: response1.data.message,
-    img4: response1.data.message,
+    img2: response2.data.message,
+    img3: response3.data.message,
+    img4: response4.data.message,
   });
 });
 
